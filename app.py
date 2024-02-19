@@ -8,7 +8,7 @@ server = 'natureproduct.database.windows.net'
 database = 'nature'
 username = 'welcome'
 password = 'Azure@12345'
-driver= '{ODBC Driver 17 for SQL Server}'
+driver= '{ODBC Driver 18 for SQL Server}'
 
 # Establishing connection to SQL Server
 def get_db_connection():
