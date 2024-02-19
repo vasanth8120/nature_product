@@ -1,18 +1,36 @@
-from flask import Flask, render_template, flash, redirect,session
+from flask import Flask, jsonify
+import pyodbc
 
-app=Flask(__name__)
+app = Flask(__name__)
 
+# Azure SQL Server configurations
+server = 'natureproduct.database.windows.net'
+database = 'nature'
+username = 'welcome'
+password = 'Azure@12345'
+driver= '{ODBC Driver 17 for SQL Server}'
 
-@app.route('/')
+# Establishing connection to SQL Server
+def get_db_connection():
+    try:
+        conn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
+        return conn
+    except Exception as e:
+        print(str(e))
+        return None
 
+# API endpoint to fetch data from SQL Server
+@app.route('/data', methods=['GET'])
+def get_data():
+    connection = get_db_connection()
+    if connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM YourTable")  # Modify this query based on your database structure
+        data = cursor.fetchall()
+        connection.close()
+        return jsonify(data)
+    else:
+        return jsonify({"message": "Failed to connect to the database"}), 500
 
-
-def index():
-    return "welcome"
-
-
-
-
-
-if __name__ =='__main__':
+if __name__ == '__main__':
     app.run(debug=True)
