@@ -8,7 +8,7 @@ server = 'natureproduct.database.windows.net'
 database = 'nature'
 username = 'welcome'
 password = 'Azure@12345'
-driver= '{ODBC Driver 18 for SQL Server}'
+driver = '{ODBC Driver 18 for SQL Server}'
 
 # Establishing connection to SQL Server
 def get_db_connection():
@@ -25,7 +25,7 @@ def get_data():
     connection = get_db_connection()
     if connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM YourTable")  # Modify this query based on your database structure
+        cursor.execute("SELECT * FROM YourTable")  # Replace YourTable with your actual table name
         data = cursor.fetchall()
         connection.close()
         return jsonify(data)
